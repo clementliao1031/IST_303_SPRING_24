@@ -1,15 +1,15 @@
 # tests file named "pe3.py" located in the same dir as this test file
 # 25 tests should pass, 2 should fail with "XFAIL"
 
-import pytest, datetime
+import pytest, datetime, string
 from pe3 import *
 
 #parametrized tests for encode function
 @pytest.mark.parametrize("in_text, shift, out_text",[("", 3, ""), 
 	("a", 3, "d"),
-	(''' I stand before you all today to speak on my assassination, without resentment or bitterness. Although what has occurred is so tragic, the reasoning behind these bold actions are valid. I, like many of you, am so appalled by what has happened, and it deeply saddens me to know the men that I once called my dearest friends have deceived me. They rushed me to the Capitol to be crowned, just to watch my wounds pour out blood. I feel betrayed. I feel hurt. I feel powerless.''', 3,''' l vwdqg ehiruh brx doo wrgdb wr vshdn rq pb dvvdvvlqdwlrq, zlwkrxw uhvhqwphqw ru elwwhuqhvv. dowkrxjk zkdw kdv rffxuuhg lv vr wudjlf, wkh uhdvrqlqj ehklqg wkhvh erog dfwlrqv duh ydolg. l, olnh pdqb ri brx, dp vr dssdoohg eb zkdw kdv kdsshqhg, dqg lw ghhsob vdgghqv ph wr nqrz wkh phq wkdw l rqfh fdoohg pb ghduhvw iulhqgv kdyh ghfhlyhg ph. wkhb uxvkhg ph wr wkh fdslwro wr eh furzqhg, mxvw wr zdwfk pb zrxqgv srxu rxw eorrg. l ihho ehwudbhg. l ihho kxuw. l ihho srzhuohvv.'''),
-	("A", 3, "d"), ("XyZ", 3, "abc"), ("X!y.Z&", 3, "a!b.c&"),
-	("Calmly we walk on this April day", 10, "mkvwvi go gkvu yx drsc kzbsv nki")])
+	(''' I stand before you all today to speak on my assassination, without resentment or bitterness. Although what has occurred is so tragic, the reasoning behind these bold actions are valid. I, like many of you, am so appalled by what has happened, and it deeply saddens me to know the men that I once called my dearest friends have deceived me. They rushed me to the Capitol to be crowned, just to watch my wounds pour out blood. I feel betrayed. I feel hurt. I feel powerless.''', 3,''' L vwdqg ehiruh brx doo wrgdb wr vshdn rq pb dvvdvvlqdwlrq, zlwkrxw uhvhqwphqw ru elwwhuqhvv. Dowkrxjk zkdw kdv rffxuuhg lv vr wudjlf, wkh uhdvrqlqj ehklqg wkhvh erog dfwlrqv duh ydolg. L, olnh pdqb ri brx, dp vr dssdoohg eb zkdw kdv kdsshqhg, dqg lw ghhsob vdgghqv ph wr nqrz wkh phq wkdw L rqfh fdoohg pb ghduhvw iulhqgv kdyh ghfhlyhg ph. Wkhb uxvkhg ph wr wkh Fdslwro wr eh furzqhg, mxvw wr zdwfk pb zrxqgv srxu rxw eorrg. L ihho ehwudbhg. L ihho kxuw. L ihho srzhuohvv.'''),
+	("a", 3, "d"), ("xyz", 3, "abc"), ("x!y.z&", 3, "a!b.c&"),
+	("Calmly we walk on this April day", 10, "Mkvwvi go gkvu yx drsc Kzbsv nki")])
 def test_encode(in_text, shift, out_text):
 	assert encode(in_text, shift)[1] == out_text
 
@@ -19,7 +19,7 @@ def test_encode(in_text, shift, out_text):
 	(''' l vwdqg ehiruh brx doo wrgdb wr vshdn rq pb dvvdvvlqdwlrq, zlwkrxw uhvhqwphqw ru elwwhuqhvv. dowkrxjk zkdw kdv rffxuuhg lv vr wudjlf, wkh uhdvrqlqj ehklqg wkhvh erog dfwlrqv duh ydolg. l, olnh pdqb ri brx, dp vr dssdoohg eb zkdw kdv kdsshqhg, dqg lw ghhsob vdgghqv ph wr nqrz wkh phq wkdw l rqfh fdoohg pb ghduhvw iulhqgv kdyh ghfhlyhg ph. wkhb uxvkhg ph wr wkh fdslwro wr eh furzqhg, mxvw wr zdwfk pb zrxqgv srxu rxw eorrg. l ihho ehwudbhg. l ihho kxuw. l ihho srzhuohvv.''', 3,
 		''' i stand before you all today to speak on my assassination, without resentment or bitterness. although what has occurred is so tragic, the reasoning behind these bold actions are valid. i, like many of you, am so appalled by what has happened, and it deeply saddens me to know the men that i once called my dearest friends have deceived me. they rushed me to the capitol to be crowned, just to watch my wounds pour out blood. i feel betrayed. i feel hurt. i feel powerless.'''),
 	("d", 3, "a"), ("abc", 3, "xyz"), ("a!b.c&", 3, "x!y.z&"),
-	("mkvwvi go gkvu yx drsc kzbsv nki", 10, "calmly we walk on this april day")])
+	("mvwvi go gkvu yx drsc kzbsv nki", 10, "clmly we walk on this april day")])
 def test_decode(in_text, shift, out_text):
 	assert decode(in_text, shift) == out_text
 

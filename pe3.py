@@ -15,21 +15,26 @@ def encode(input_text, shift):
             return encoded_letter
         else:
             return letter
-    
+
     encoded_text = ''.join(encode_letter(char) for char in input_text)
     return alphabet_list, encoded_text
 
+print(encode ("a", 3)) # should return ([" a" , "b" , ... "z"] , "d")
+print(encode (" abc", 4 )) # should return ([" a" , "b" , ... "z"] , " efg ")
+print(encode (" xyz", 3 )) # should return ([" a" , "b" , ... "z"] , " abc ")
+print(encode ("j!K,2?", 3)) # should return ([" a" , "b" , ... "z"] , "m!n,2 ?")
 
 
 def decode(input_text, shift):
     alphabet = 'abcdefghijklmnopqrstuvwxyz'
+    alphabet_list = list(alphabet)
     
     def decode_letter(letter):
         if letter.isalpha():
             is_upper = letter.isupper()
             letter = letter.lower()
-            index = (alphabet.index(letter) - shift) % 26
-            decoded_letter = alphabet[index]
+            index = (alphabet_list.index(letter) - shift) % 26
+            decoded_letter = alphabet_list[index]
             if is_upper:
                 decoded_letter = decoded_letter.upper()
             return decoded_letter
@@ -39,13 +44,18 @@ def decode(input_text, shift):
     decoded_text = ''.join(decode_letter(char) for char in input_text)
     return decoded_text
 
-
+print(decode ("d", 3)) # should return "a"
+print(decode (" efg", 4 )) # should return " abc "
+print(decode (" abc", 3 )) # should return " xyz "
+print(decode ("m!n,2?", 3)) # should return "j!K,2 ?"
 
 class BankAccount:
     def __init__(self, name="Rainy", ID="1234", creation_date=None, balance=0):
+        if creation_date and creation_date > date.today():
+            raise Exception()
         self.name = name
         self.ID = ID
-        self.creation_date = creation_date if (creation_date and creation_date <= date.today()) else date.today()
+        self.creation_date = creation_date if (creation_date and creation_date <= date.today()) else date.today() 
         self.balance = balance
 
     def deposit(self, amount):
@@ -58,7 +68,7 @@ class BankAccount:
     def withdraw(self, amount):
         if amount < 0:
             pass
-        if self.balance < amount:
+        if self.balance > amount:
             print("Insufficient funds. Withdrawal unsuccessful.")
         else:
             self.balance -= amount
